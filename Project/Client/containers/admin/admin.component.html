@@ -1,0 +1,162 @@
+<div *ngIf="appState.includes('Slider') && item" class="container pt-2 pt-lg-5 pb-2 pb-lg-5">
+    <div [routerLinkActive]="['link-active']">
+        <a [routerLink]="['/home']">
+            <i class="fa fa-undo" aria-hidden="true"></i> Go Back
+        </a>
+    </div>
+    <h2>{{title}}</h2>
+    <form #sliderForm="ngForm">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input [(ngModel)]="item.title" name="itemTitle" class="form-control" required #itemtitle="ngModel" />
+            <div *ngIf="itemtitle.errors && (itemtitle.dirty || itemtitle.touched)"
+                 class="alert alert-danger">
+                <div [hidden]="!itemtitle.errors.required">
+                    This is required
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">Description: </label>
+            <ckeditor [(ngModel)]="item.description" [config]="{extraPlugins: 'divarea'}" name="itemDescription_ckEditor" class="form-control" required #itemdescription="ngModel" debounce="500">
+            </ckeditor>
+            <div *ngIf="itemdescription.errors && (itemdescription.dirty || itemdescription.touched)"
+                 class="alert alert-danger">
+                <div [hidden]="!itemdescription.errors.required">
+                    This is required
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="linkText">Link text:</label>
+            <input [(ngModel)]="item.linkText" name="linkText" class="form-control" required #itemlinkText="ngModel" />
+            <div *ngIf="itemlinkText.errors && (itemlinkText.dirty || itemlinkText.touched)"
+                 class="alert alert-danger">
+                <div [hidden]="!itemlinkText.errors.required">
+                    This is required
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="title">Link URL:</label>
+            <input [(ngModel)]="item.linkUrl" name="linkUrl" class="form-control" required #itemlinkUrl="ngModel" />
+            <div *ngIf="itemlinkUrl.errors && (itemlinkUrl.dirty || itemlinkUrl.touched)"
+                 class="alert alert-danger">
+                <div [hidden]="!itemlinkUrl.errors.required">
+                    This is required
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div *ngIf="oldImage">
+                <label for="oldImage">Current Image:</label>
+                <img [src]="oldImage" alt="oldImageUrl:" class="form-control" />
+            </div>
+            <label for="title">Upload Image:</label>
+            <kendo-upload name="kendoImageUpload"
+                          [showFileList]="true"
+                          [restrictions]="fileRestrictions"
+                          [(ngModel)]="item.image"
+                          [multiple]="false"
+                          class="form-control" required>
+            </kendo-upload>
+        </div>
+        <div *ngIf="appState === 'createSlider'">
+            <button type="submit" class="btn btn-default"
+                    [disabled]="!sliderForm.form.valid"
+                    (click)="createSlider()">
+                Create {{typeOfContent}}
+            </button>
+        </div>
+        <div *ngIf="appState ==='editSlider'">
+            <button type="submit" class="btn btn-default"
+                    [disabled]="!sliderForm.form.valid"
+                    (click)="updateSlider()">
+                Update {{typeOfContent}}
+            </button>
+            <button type="submit" class="btn btn-default" (click)="openDialog()">Delete {{typeOfContent}}</button>
+        </div>
+    </form>
+    <!--Confirm dialog-->
+    <div *ngIf="showDialog">
+        <kendo-dialog title="Please confirm" (close)="confirmed(false)">
+            <p style="margin: 30px; text-align: center;">Are you sure you want to continue?</p>
+            <kendo-dialog-actions>
+                <button class="btn btn-default" (click)="confirmed(false)">No</button>
+                <button class="btn btn-default" (click)="confirmed(true)" primary="true">Yes</button>
+            </kendo-dialog-actions>
+        </kendo-dialog>
+    </div>
+</div>
+
+<div *ngIf="appState.includes('Content') && item" class="container pt-2 pt-lg-5 pb-2 pb-lg-5">
+    <div [routerLinkActive]="['link-active']">
+        <a [routerLink]="['/home']">
+            <i class="fa fa-undo" aria-hidden="true"></i> Go Back
+        </a>
+    </div>
+    <h2>{{title}}</h2>
+    <form #sliderForm="ngForm">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input [(ngModel)]="item.title" name="itemTitle" class="form-control" required #itemtitle="ngModel" />
+            <div *ngIf="itemtitle.errors && (itemtitle.dirty || itemtitle.touched)"
+                 class="alert alert-danger">
+                <div [hidden]="!itemtitle.errors.required">
+                    This is required
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">Description: </label>
+            <ckeditor [(ngModel)]="item.description" [config]="{extraPlugins: 'divarea'}" name="itemDescription_ckEditor" class="form-control" required #itemdescription="ngModel">
+            </ckeditor>
+            <div *ngIf="itemdescription.errors && (itemdescription.dirty || itemdescription.touched)"
+                 class="alert alert-danger">
+                <div [hidden]="!itemdescription.errors.required">
+                    This is required
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div *ngIf="oldImage">
+                <label for="oldImage">Current Image:</label>
+                <img [src]="oldImage" alt="oldImageUrl:" class="form-control" />
+            </div>
+            <label for="title">Upload Image:</label>
+            <kendo-upload name="kendoImageUpload"
+                          [showFileList]="true"
+                          [restrictions]="fileRestrictions"
+                          [(ngModel)]="item.image"
+                          [multiple]="false"
+                          class="form-control">
+            </kendo-upload>
+        </div>
+        <div *ngIf="appState === 'createContent'">
+            <button type="submit" class="btn btn-default"
+                    [disabled]="!sliderForm.form.valid"
+                    (click)="createContent()">
+                Create {{typeOfContent}}
+            </button>
+        </div>
+        <div *ngIf="appState ==='editContent'">
+            <button type="submit" class="btn btn-default"
+                    [disabled]="!sliderForm.form.valid"
+                    (click)="updateContent()">
+                Update {{typeOfContent}}
+            </button>
+            <button type="submit" class="btn btn-default" (click)="openDialog()">Delete {{typeOfContent}}</button>
+        </div>
+    </form>
+
+    <!--Confirm dialog-->
+    <div *ngIf="showDialog">
+        <kendo-dialog title="Please confirm" (close)="confirmed(false)">
+            <p style="margin: 30px; text-align: center;">Are you sure you want to continue?</p>
+            <kendo-dialog-actions>
+                <button class="btn btn-default" (click)="confirmed(false)">No</button>
+                <button class="btn btn-default" (click)="confirmed(true)" primary="true">Yes</button>
+            </kendo-dialog-actions>
+        </kendo-dialog>
+    </div>
+</div>

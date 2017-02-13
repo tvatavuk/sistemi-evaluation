@@ -1,0 +1,25 @@
+<section *ngIf="item" class="dnn-hero-stories pt-2 pb-2 pt-lg-5 pb-lg-5">
+    <div class="container">
+        <nav *ngIf="loggedIn$ && user$">
+            <div [routerLinkActive]="['link-active']">
+                <a [routerLink]="['/admin','editContent',item.id]" class="btn btn-secondary">
+                    <i class="fa fa-edit" aria-hidden="true"></i> EDIT
+                </a>
+            </div>
+            <!--<div [routerLinkActive]="['link-active']" class="btn btn-secondary">
+              <a [routerLink]="['/admin','createContent']">
+                <i class="fa fa-plus" aria-hidden="true"></i> ADD
+              </a>
+            </div>-->
+        </nav>
+        <div class="row">
+            <div class="col-sm-12 col-md-5 mx-auto">
+                <img src="{{item.image}}" alt="{{item.title}}" class="img-fluid">
+            </div>
+            <div class="col-sm-12 col-md-7 mx-auto">
+                <h2 class="dnn-hero-stories__heading">{{item.title}}</h2>
+                <div [innerHTML]="item.description" class="dnn-hero-stories__meta"></div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,30 @@
+/* GLOBAL HEADER
+-------------------------------------------------- */
+
+.c-global-header {
+  padding: 20px;
+}
+
+.c-global-header__logo {
+  height: 30px;
+}
+.c-global-header__svg {
+  position: relative;
+  width:180px;
+  height:30px; 
+}
+
+/* User profile */
+
+.user-profile,
+.user-profile a {
+    color: rgba(255,255,255,.5);
+    text-decoration: none;
+}
+.user-profile a:focus, .user-profile a:hover {
+    color: rgba(255,255,255,.75);
+}
+
+.user-profile__name {
+  color: rgba(255,255,255,.75);
+}

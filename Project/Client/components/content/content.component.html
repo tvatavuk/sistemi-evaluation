@@ -1,0 +1,27 @@
+<section *ngIf="item" class="dnn-hero-stories pt-2 pb-2 pt-lg-5 pb-lg-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-5 mx-auto">
+                <img src="assets/content/dnn-logo.jpg" alt="DNN framework" class="img-fluid">
+            </div>
+            <div class="col-sm-12 col-md-7 mx-auto">
+                <h2 class="dnn-hero-stories__heading">{{item.title}}</h2>
+                <div class="dnn-hero-stories__meta" [innerHTML]="item.description">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="loggedIn$ && user$">
+        <div [routerLinkActive]="['link-active']">
+            <a [routerLink]="['/admin','editContent',item.id]">
+                <i class="fa fa-edit" aria-hidden="true"></i> EDIT
+            </a>
+        </div>
+        <div [routerLinkActive]="['link-active']">
+            <a [routerLink]="['/admin','createContent']">
+                <i class="fa fa-plus" aria-hidden="true"></i> ADD
+            </a>
+        </div>
+    </div>
+</section>

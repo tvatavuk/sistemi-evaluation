@@ -1,0 +1,27 @@
+<section *ngIf="item" class="project-stories pt-2 pb-2 pt-lg-5 pb-lg-5">
+    <nav *ngIf="loggedIn$ && user$">
+        <div [routerLinkActive]="['link-active']">
+            <a [routerLink]="['/admin','editContent',item.id]" class="btn btn-secondary">
+                <i class="fa fa-edit" aria-hidden="true"></i> EDIT
+            </a>
+        </div>
+        <!--<div [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/admin','createContent']" class="btn btn-secondary">
+            <i class="fa fa-plus" aria-hidden="true"></i> ADD
+          </a>
+        </div>-->
+    </nav>
+    <div class="container">
+        <h2>Latest project</h2>
+        <hr class="featurette-divider" />
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h3 class="featurette-heading">{{item.title}}</h3>
+                <div [innerHTML]="item.description" class="lead"></div>
+            </div>
+            <div class="col-md-5">
+                <img class="featurette-image img-fluid mx-auto" src="{{item.image}}" alt="{{item.title}}">
+            </div>
+        </div>
+    </div>
+</section>
